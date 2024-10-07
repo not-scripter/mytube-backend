@@ -57,7 +57,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(409, "user with email or username allready exists");
   }
 
-  console.log(req.files);
+  // console.log(req.files);
   const avatarLocalPath = req.files?.avatar[0].path;
   // const coverImageLocalPath = req.files?.coverImage[0].path;
 
@@ -67,7 +67,7 @@ const registerUser = asyncHandler(async (req, res) => {
     Array.isArray(req.files.coverImage) &&
     req.files.coverImage.length > 0
   ) {
-    coverImageLocalPath = req.files.coverImage[0].path;
+    coverImageLocalPath = req.files?.coverImage[0].path;
   }
 
   if (!avatarLocalPath) {
@@ -75,6 +75,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const avatar = await uploadOnCloudinary(avatarLocalPath);
+  console.log(avatar?.url);
   const coverImage = await uploadOnCloudinary(coverImageLocalPath);
 
   if (!avatar) {
@@ -100,7 +101,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   return res
     .status(201)
-    .json(new ApiResponse(200, createdUser, "user registered succ3sfully"));
+    .json(new ApiResponse(200, createdUser, "user registered succesfully"));
 });
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -315,7 +316,7 @@ const updateUserCoverImage = asyncHandler(async (req, rea) => {
     );
 });
 
-const getUserChannelDetails = asyncHandler(async () => {
+const getUserChannelDetails = asyncHandler(async (req, res) => {
   const { username } = req.params;
 
   if (!username?.trim) {
@@ -374,7 +375,7 @@ const getUserChannelDetails = asyncHandler(async () => {
       },
     },
   ]);
-  console.log(channel);
+  // console.log(channel);
 
   if (!channel?.length) {
     throw new ApiError(401, "channel not found");
