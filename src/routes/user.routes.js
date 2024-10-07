@@ -37,10 +37,10 @@ router.route("/current-user").get(verifyJwt, getCurrentUser);
 router.route("/update-details").patch(verifyJwt, updateUserDetails);
 router
   .route("/update-avatar")
-  .patch(verifyJwt, upload.single("/avatar"), updateUserAvatar);
+  .patch(verifyJwt, upload.single("avatar"), updateUserAvatar);
 router
   .route("/update-coverImage")
-  .patch(verifyJwt, upload.single("/coverImage"), updateUserCoverImage);
+  .patch(verifyJwt, upload.single("coverImage"), updateUserCoverImage);
 router.route("/c/:username").get(verifyJwt, getUserChannelDetails);
 router.route("/watch-history").get(verifyJwt, getWatchHistory);
 
